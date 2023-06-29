@@ -101,7 +101,10 @@ function calculate($expMatematica)
     return $resultado;
 }
 
-// $expMatematica = readline("Insira a expressão: ");
-// $resultado = calculate($expMatematica);
-// echo "Resultado: " . $resultado . "\n";
+if (isset($_POST['Exp'])) {
+    $expression = $_POST['Exp'];
+    $result = Calculate($expression);
+    echo $result;
+}
+
 ?>
