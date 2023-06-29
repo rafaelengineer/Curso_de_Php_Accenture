@@ -1,7 +1,7 @@
 <?php
 require_once "templates/header.php";
 
-if (! playersRegistered()) {
+if (!playersRegistered()) {
     header("location: index.php");
 }
 
@@ -16,15 +16,19 @@ if ($_POST['cell']) {
 if (playsCount() >= 9) {
     header("location: result.php");
 }
+
+if (isset($_POST['reset'])) {
+    resetBoard();
+    // Redirect to the same page after resetting the board
+    header("location: play.php");
+}
 ?>
 
 <h2><?php echo currentPlayer() ?>'s turn</h2>
 
 <form method="post" action="play.php">
-
     <table class="tic-tac-toe" cellpadding="0" cellspacing="0">
         <tbody>
-
         <?php
         $lastRow = 0;
         for ($i = 1; $i <= 9; $i++) {
@@ -44,33 +48,28 @@ if (playsCount() >= 9) {
 
             if ($i == 2 || $i == 8) {
                 $additionalClass = 'vertical-border';
-            }
-            else if ($i == 4 || $i == 6) {
+            } elseif ($i == 4 || $i == 6) {
                 $additionalClass = 'horizontal-border';
-            }
-            else if ($i == 5) {
+            } elseif ($i == 5) {
                 $additionalClass = 'center-border';
             }
             ?>
-
             <td class="cell-<?= $i ?> <?= $additionalClass ?>">
                 <?php if (getCell($i) === 'x'): ?>
                     X
                 <?php elseif (getCell($i) === 'o'): ?>
                     O
                 <?php else: ?>
-                    <input type="radio" name="cell" value="<?= $i ?>" onclick="enableButton()"/>
+                    <input type="radio" name="cell" value="<?= $i ?>" onclick="enableButton()" />
                 <?php endif; ?>
             </td>
-
         <?php } ?>
-
         </tr>
         </tbody>
     </table>
 
     <button type="submit" disabled id="play-btn">Play</button>
-
+    <button type="submit" name="reset">Reset</button>
 </form>
 
 <script type="text/javascript">
