@@ -1,24 +1,44 @@
-<?php session_start();?>
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Web</title>
+    <title>Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#calculateBtn").click(function() {
+                var expression = $("#expressionInput").val();
+                $.ajax({
+                    type: "POST",
+                    url: "Calculadora.php",
+                    data: { Exp: expression },
+                    success: function(result) {
+                        $("#result").html(result);
+                        $("#resultSection").show();
+                    },
+                    error: function() {
+                        alert("An error occurred while processing the request.");
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        #resultSection {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <p><h1>"Calculadora"</h1></p>
-    <p><h3>Esta calculadora funciona com expressões aritimetias regulares</h3></p>
-    <p><h3>Só são aceitos as quatro operações básicas (+ - * /)</h3></p>
-    <p><h3>Concatene operandos e operadores para formar sua expressão.</h3></p>
-    <?php
-        include 'Calculadora.php';
-    ?>
-    <form Exp="inputForm" action="" method = "post">
-        Insira uma expressão matemática : <input Exp = "Exp" type = "text" size="100" maxlength="100"  />
-        <input type="submit" value="Calcula" onclick="return Calculate()"/>
-        <input type="submit" name="Nova expressão" value = "Insira nova Expressão"/>
-    </form>
+    <h1>Calculadora</h1>
+    <p>Esta calculadora funciona com expressões aritméticas. Apenas das 4 operações básicas.</p>
+    <p>Insira sua expressão encadeando operandos e operadores.</p>
+    <label for="expressionInput">Insira sua expressão:</label>
+    <input type="text" id="expressionInput" name="expressionInput">
+    <button id="calculateBtn">Calcular</button>
+    
+    <div id="resultSection">
+        <h2>Resultado:</h2>
+        <div id="result"></div>
+    </div>
 </body>
 </html>
