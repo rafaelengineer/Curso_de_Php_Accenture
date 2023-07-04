@@ -1,0 +1,38 @@
+{
+    "name": "treinamento-php/buscador-criticas",
+    "description": "Buscador de críticas de filmes",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "TreinamentoPHP\\BuscadorDeCriticas\\": "src/"
+        },
+        "files": ["helpers/pdf.php"]
+    },
+    "authors": [
+        {
+            "name": "Angela de Araujo",
+            "email": "angela.araujo.rj@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.7",
+        "symfony/dom-crawler": "^6.3",
+        "symfony/css-selector": "^6.3",
+        "monolog/monolog": "^3.4",
+        "dompdf/dompdf": "^2.0",
+        "gemorroj/archive7z": "^5.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t src",
+        "test": "phpunit",
+        "post-install-cmd": [
+            "@php -r \"file_exists('.env') || copy('.aux/.env-example', '.env');\""
+        ]
+    },
+    "config": {
+        "process-timeout": -1
+    }
+}
