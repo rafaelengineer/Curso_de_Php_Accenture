@@ -3,6 +3,13 @@
 session_start();
 error_reporting(E_ERROR | E_PARSE);
 
+function getBoard(){
+    global $board;
+    for ( $i = 1; $i <= 9; $i++ ) {
+        $board[$i] = $_SESSION['CELL_' . $i];
+    }
+    return $board;
+}
 function registerPlayers($playerX="", $playerO="") {
     $_SESSION['PLAYER_X_NAME'] = $playerX;
     $_SESSION['PLAYER_O_NAME'] = $playerO;

@@ -4,27 +4,40 @@ require_once "templates/header.php";
 if (!playersRegistered()) {
     header("location: index.php");
 }
+printf("inicio");
+$teste = true;
 
 if ($_POST['cell']) {
     $win = play($_POST['cell']);
 
     if ($win) {
-        header("location: result.php?player=" . getTurn());
+        $lastGame = getBoard();
+         echo $lastGame;
+         header("location: result.php?player=" . getTurn());
+         exit; // Exit to prevent further execution of the code
+        }
     }
-}
-
-if (playsCount() >= 9) {
-    header("location: result.php");
-}
-
-if (isset($_POST['reset'])) {
-    resetBoard();
-    // Redirect to the same page after resetting the board
+    
+    if (playsCount() >= 9) {
+        header("location: result.php");
+        exit; // Exit to prevent further execution of the code
+    }
+    
+    if (isset($_POST['reset'])) {
+        $lastGame = getBoard();
+        echo $lastGame;
+        resetBoard();
     header("location: play.php");
+    exit; // Exit to prevent further execution of the code
 }
 ?>
 
 <h2><?php echo currentPlayer() ?>'s turn</h2>
+
+<!-- Display the last play at the top left corner -->
+<div class="last-play">
+    Last Game: <?php echo $lastGame; ?>
+</div>
 
 <form method="post" action="play.php">
     <table class="tic-tac-toe" cellpadding="0" cellspacing="0">
